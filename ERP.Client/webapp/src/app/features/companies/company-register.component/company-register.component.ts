@@ -1,7 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { form, maxLength, required, submit, FormField } from '@angular/forms/signals';
 import { ApiService } from '../../../core/services/api.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 interface RegisterCompanyRequest{
@@ -24,7 +23,8 @@ interface AddressRequest{
   styleUrl: './company-register.component.css',
 })
 export class CompanyRegisterComponent {
-  constructor(private apiService: ApiService, private router: Router) {}
+  apiService = inject(ApiService);
+  router = inject(Router);
 
   companyModel = signal<RegisterCompanyRequest>({
     name: '',

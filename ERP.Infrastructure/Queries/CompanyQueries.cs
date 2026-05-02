@@ -25,7 +25,7 @@ public class CompanyQueries(ApplicationDbContext dbContext) : ICompanyQueries
 
     public async Task<ICompanyQueries.CompanyResponse?> GetCompanyAsync(Guid id, CancellationToken cancellationToken = default) =>
         await dbContext.Companies
-        .Where(company => company.PublicId.Value == id)
+        .Where(company => company.PublicId == id)
         .Select(company => new ICompanyQueries.CompanyResponse(
             company.PublicId.Value,
             company.Name,

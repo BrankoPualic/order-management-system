@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,6 +6,8 @@ import { inject, Injectable } from '@angular/core';
 })
 export class ApiService {
   private _http = inject(HttpClient);
+
+  httpResource = <T>(endpoint: string, options?: object) => httpResource<T>(() => this.generateURL(endpoint), options);
 
   get = <T>(endpoint: string, options?: object) => this._http.get<T>(this.generateURL(endpoint), options);
   post = <T>(endpoint: string, body: T, options?: object) => this._http.post<string>(this.generateURL(endpoint), body, options);

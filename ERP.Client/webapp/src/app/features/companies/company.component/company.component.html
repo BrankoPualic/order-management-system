@@ -1,0 +1,54 @@
+<div class="container">
+    @if (company.hasValue()) {
+    <h5 class="mt-5">Information</h5>
+    <div>
+        <strong>Name:</strong>
+        <div>{{ company.value().name }}</div>
+    </div>
+    <div class="mt-3">
+        <strong>Description:</strong>
+        <div>{{ company.value().description }}</div>
+    </div>
+    <div class="mt-3">
+        <strong>Address:</strong>
+        <div [innerHTML]="formatAddress(company.value().address)"></div>
+    </div>
+
+    <div class="my-3">
+        <h5>Update Information</h5>
+        <div>
+            <label class="form-label">Name:</label>
+            <input type="text" class="form-control" [(ngModel)]="newName" />
+            <button class="btn btn-outline-primary mt-2" type="button" (click)="rename()"
+                [disabled]="!newName">Rename</button>
+        </div>
+        <div>
+            <label class="form-label">Description:</label>
+            <textarea rows="2" class="form-control" [(ngModel)]="newDescription"></textarea>
+            <button class="btn btn-outline-primary mt-2" type="button" (click)="changeDescription()"
+                [disabled]="!newDescription">Change
+                Description</button>
+        </div>
+        <div>
+            <label class="form-label">Address:</label>
+            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().street" placeholder="Street" />
+            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().city" placeholder="City" />
+            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().state" placeholder="State" />
+            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().country" placeholder="Country" />
+            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().zipCode" placeholder="Zip Code" />
+            <button class="btn btn-outline-primary mt-2" type="button" (click)="changeAddress()"
+                [disabled]="!newAddress().street || !newAddress().city || !newAddress().state || !newAddress().country || !newAddress().zipCode">Change
+                Address</button>
+        </div>
+    </div>
+
+    <button class="btn btn-danger mt-3 mb-5" type="button" (click)="deleteCompany()">Delete</button>
+    }
+    @else if (company.error()) {
+    <div>Could not load company information</div>
+    }
+    @else if (company.isLoading())
+    {
+    <div>Loading company info...</div>
+    }
+</div>
