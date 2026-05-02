@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container my-5">
     @if (company.hasValue()) {
-    <h5 class="mt-5">Information</h5>
+    <h5>Information</h5>
     <div>
         <strong>Name:</strong>
         <div>{{ company.value().name }}</div>
@@ -42,13 +42,12 @@
         </div>
     </div>
 
-    <button class="btn btn-danger mt-3 mb-5" type="button" (click)="deleteCompany()">Delete</button>
+    <button class="btn btn-danger mt-3" type="button" (click)="deleteCompany()">Delete</button>
     }
     @else if (company.error()) {
     <div>Could not load company information</div>
     }
-    @else if (company.isLoading())
-    {
+    @else if (company.isLoading()) {
     <div>Loading company info...</div>
     }
 </div>

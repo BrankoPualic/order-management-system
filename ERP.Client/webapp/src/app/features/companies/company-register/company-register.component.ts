@@ -2,19 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { form, maxLength, required, submit, FormField } from '@angular/forms/signals';
 import { ApiService } from '../../../core/services/api.service';
 import { Router } from '@angular/router';
-
-interface RegisterCompanyRequest{
-  name: string,
-  description: string,
-  address: AddressRequest
-}
-interface AddressRequest{
-  street: string;
-  city: string;
-  state: string;
-  country: string;
-  zipCode: string;
-}
+import { CompanyRegisterRequestModel } from '../models/company-register-request.model';
 
 @Component({
   selector: 'app-company-register.component',
@@ -26,7 +14,7 @@ export class CompanyRegisterComponent {
   apiService = inject(ApiService);
   router = inject(Router);
 
-  companyModel = signal<RegisterCompanyRequest>({
+  companyModel = signal<CompanyRegisterRequestModel>({
     name: '',
     description: '',
     address: {

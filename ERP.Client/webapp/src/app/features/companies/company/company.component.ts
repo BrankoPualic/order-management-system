@@ -5,21 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
 import { FormsModule } from '@angular/forms';
-
-interface CompanyModel {
-  id: string;
-  name: string;
-  description: string;
-  createdOn: Date | string;
-  address: AddressModel;
-}
-interface AddressModel {
-  street: string;
-  city: string;
-  state: string;
-  country: string;
-  zipCode: string;
-}
+import { CompanyModel } from '../models/company.model';
+import { AddressModel } from '../models/address.model';
 
 @Component({
   selector: 'app-company.component',
