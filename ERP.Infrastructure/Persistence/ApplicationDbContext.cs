@@ -11,5 +11,7 @@ public partial class ApplicationDbContext(DbContextOptions<ApplicationDbContext>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CompanyConfiguration());
+
+        modelBuilder.ApplyConfiguration(new ProductConfiguration());
     }
 }
