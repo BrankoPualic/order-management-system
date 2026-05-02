@@ -82,6 +82,49 @@ namespace ERP.Infrastructure.Migrations
 
                     b.ToTable("Companies");
                 });
+
+            modelBuilder.Entity("ERP.Domain.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<Guid>("PublicId")
+                        .HasColumnType("uuid");
+
+                    b.ComplexProperty(typeof(Dictionary<string, object>), "Price", "ERP.Domain.Product.Price#Money", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("PublicId");
+
+                    b.ToTable("Products");
+                });
 #pragma warning restore 612, 618
         }
     }
