@@ -18,28 +18,25 @@
         <h5>Update Information</h5>
         <div>
             <label class="form-label">Name:</label>
-            <input type="text" class="form-control" [(ngModel)]="newName" />
-            <button class="btn btn-outline-primary mt-2" type="button" (click)="rename()"
-                [disabled]="!newName">Rename</button>
+            <input type="text" class="form-control" [(ngModel)]="companyCopy().name" />
         </div>
         <div>
             <label class="form-label">Description:</label>
-            <textarea rows="2" class="form-control" [(ngModel)]="newDescription"></textarea>
-            <button class="btn btn-outline-primary mt-2" type="button" (click)="changeDescription()"
-                [disabled]="!newDescription">Change
-                Description</button>
+            <textarea rows="2" class="form-control" [(ngModel)]="companyCopy().description"></textarea>
         </div>
         <div>
             <label class="form-label">Address:</label>
-            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().street" placeholder="Street" />
-            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().city" placeholder="City" />
-            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().state" placeholder="State" />
-            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().country" placeholder="Country" />
-            <input type="text" class="form-control my-1" [(ngModel)]="newAddress().zipCode" placeholder="Zip Code" />
-            <button class="btn btn-outline-primary mt-2" type="button" (click)="changeAddress()"
-                [disabled]="!newAddress().street || !newAddress().city || !newAddress().state || !newAddress().country || !newAddress().zipCode">Change
-                Address</button>
+            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.street"
+                placeholder="Street" />
+            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.city" placeholder="City" />
+            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.state"
+                placeholder="State" />
+            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.country"
+                placeholder="Country" />
+            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.zipCode"
+                placeholder="Zip Code" />
         </div>
+        <button class="btn btn-primary mt-2" type="button" (click)="updateCompany()">Update</button>
     </div>
 
     <button class="btn btn-danger mt-3" type="button" (click)="deleteCompany()">Delete</button>

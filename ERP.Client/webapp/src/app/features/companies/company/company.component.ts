@@ -1,5 +1,5 @@
 import { HttpResourceRef } from '@angular/common/http';
-import { Component, inject, model, Signal, signal } from '@angular/core';
+import { Component, effect, inject, model, Signal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
@@ -7,6 +7,8 @@ import { ApiService } from '../../../core/services/api.service';
 import { FormsModule } from '@angular/forms';
 import { CompanyModel } from '../models/company.model';
 import { AddressModel } from '../models/address.model';
+import { CompanyUpdateInformationRequestModel } from '../models/company-update-information-request.model';
+import { deepCopy } from '@angular-devkit/core';
 
 @Component({
   selector: 'app-company.component',
@@ -22,17 +24,15 @@ export class CompanyComponent {
   company: HttpResourceRef<CompanyModel | undefined>;
   newName = '';
   newDescription = '';
-  newAddress = signal<AddressModel>({
-    street: '',
-    city: '',
-    state: '',
-    country: '',
-    zipCode: ''
-  });
+  companyCopy = signal<CompanyUpdateInformationRequestModel>({} as CompanyUpdateInformationRequestModel);
 
   constructor() {
     this.companyId = toSignal(this.route.paramMap.pipe(map(params => params.get('id'))));
     this.company = this.apiService.httpResource<CompanyModel | undefined>(`/companies/${this.companyId()}`);
+
+    effect(() => {
+      if (this.company.value()) this.companyCopy.set(deepCopy(this.company.value()) as CompanyUpdateInformationRequestModel);
+    })
   }
 
   formatAddress = (address: AddressModel) => `${address.street}<br/>${address.zipCode} ${address.city}, ${address.state}<br/>${address.country}`;
@@ -44,23 +44,9 @@ export class CompanyComponent {
     })
   }
 
-  rename() {
-    this.apiService.patch(`/companies/${this.companyId()}/name`, { name: this.newName }).subscribe({
-      next: () => { this.newName = ''; this.company.reload() },
-      error: error => console.error(error)
-    })
-  }
-
-  changeDescription() {
-    this.apiService.patch(`/companies/${this.companyId()}/description`, { description: this.newDescription }).subscribe({
-      next: () => { this.newDescription = ''; this.company.reload() },
-      error: error => console.error(error)
-    })
-  }
-
-  changeAddress() {
-    this.apiService.patch(`/companies/${this.companyId()}/address`, { address: this.newAddress() }).subscribe({
-      next: () => { this.newAddress.set({} as AddressModel); this.company.reload() },
+  updateCompany() {
+    this.apiService.patch(`/companies/${this.companyId()}`, this.companyCopy()).subscribe({
+      next: () => this.company.reload(),
       error: error => console.error(error)
     })
   }
