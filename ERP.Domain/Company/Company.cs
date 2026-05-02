@@ -14,6 +14,41 @@ public class Company : IAggregateRoot
     public CompanyId PublicId { get; private set; } = CompanyId.NewId();
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
-    public Address Address { get; private set; } = null!;
-    public DateTime CreatedOn { get; private set; } = DateTime.UtcNow;
+    public Address Address { get; private set; }
+    public DateTime CreatedOn { get; private set; }
+
+    private Company(string name, string description, Address address)
+    {
+        Name = name;
+        Description = description;
+        Address = address ?? throw new ArgumentNullException("Address is required");
+        CreatedOn = DateTime.UtcNow;
+    }
+
+    public static Company Register(string name, string description, Address address)
+    {
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required");
+        if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Description is required");
+        if (name.Length > 255) throw new ArgumentException("Name is longer than 255 characters");
+
+        return new(name, description, address);
+    }
+
+    public void Rename(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required");
+        if (name.Length > 255) throw new ArgumentException("Name is longer than 255 characters");
+        Name = name;
+    }
+
+    public void UpdateAddress(Address address)
+    {
+        Address = address ?? throw new ArgumentNullException("Address is required");
+    }
+
+    public void UpdateDescription(string description)
+    {
+        if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Description is required");
+        Description = description;
+    }
 }
