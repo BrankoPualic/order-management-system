@@ -1,6 +1,7 @@
 using ERP.Domain;
 using ERP.Domain.Shared;
 using ERP.Domain.Shared.ValueObjects;
+using ERP.Infrastructure.Queries;
 
 namespace ERP.API.Endpoints;
 
@@ -10,8 +11,11 @@ public static class CompanyEndpoints
     {
         var group = app.MapGroup("/companies");
 
+        group.MapGet("/", GetCompanies);
         group.MapPost("/", RegisterCompany);
     }
+
+    private static async Task<ICompanyQueries.CompanyResponse[]> GetCompanies(ICompanyQueries queries, CancellationToken cancellationToken = default) => await queries.GetCompaniesAsync(cancellationToken);
 
     private static async Task<IResult> RegisterCompany(RegisterCompanyRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
     {
