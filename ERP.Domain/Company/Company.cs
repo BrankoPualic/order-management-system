@@ -13,7 +13,7 @@ public class Company : IAggregateRoot
 
     public CompanyId PublicId { get; private set; } = CompanyId.NewId();
     public string Name { get; private set; } = string.Empty;
-    public string Notes { get; private set; } = string.Empty;
+    public string Description { get; private set; } = string.Empty;
     public Address Address { get; private set; } = null!;
     public DateTime CreatedOn { get; private set; } = DateTime.UtcNow;
 }
