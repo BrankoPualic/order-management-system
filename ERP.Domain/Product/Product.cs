@@ -3,40 +3,40 @@ using ERP.Domain.Shared.ValueObjects;
 
 namespace ERP.Domain;
 
-public class Company : IAggregateRoot
+public class Product : IAggregateRoot
 {
-    public readonly record struct CompanyId(Guid Value)
+    public readonly record struct ProductId(Guid Value)
     {
-        public static CompanyId Empty { get; } = new(Guid.Empty);
-        public static CompanyId NewId() => new(Guid.NewGuid());
+        public static ProductId Empty { get; } = new(Guid.Empty);
+        public static ProductId NewId() => new(Guid.NewGuid());
 
         public override string ToString() => Value.ToString();
-        public static implicit operator CompanyId(Guid value) => new(value);
+        public static implicit operator ProductId(Guid value) => new(value);
     }
 
-    public CompanyId PublicId { get; private set; } = CompanyId.NewId();
+    public ProductId PublicId { get; private set; }
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
-    public Address Address { get; private set; } = null!;
+    public Money Price { get; private set; } = null!;
     public DateTime CreatedOn { get; private set; }
 
     // Needed for EF Core
-    private Company() { }
-    private Company(string name, string description, Address address) : this()
+    private Product() { }
+    private Product(string name, string description, Money price) : this()
     {
         Name = name;
         Description = description;
-        Address = address ?? throw new ArgumentNullException("Address is required");
+        Price = price ?? throw new ArgumentNullException("Price is required");
         CreatedOn = DateTime.UtcNow;
     }
 
-    public static Company Register(string name, string description, Address address)
+    public static Product Register(string name, string description, Money price)
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required");
         if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Description is required");
         if (name.Length > 255) throw new ArgumentException("Name is longer than 255 characters");
 
-        return new(name, description, address);
+        return new(name, description, price);
     }
 
     public void Rename(string name)
@@ -52,8 +52,8 @@ public class Company : IAggregateRoot
         Description = description;
     }
 
-    public void ChangeAddress(Address address)
+    public void ChangePrice(Money price)
     {
-        Address = address ?? throw new ArgumentNullException("Address is required");
+        Price = price ?? throw new ArgumentNullException("Price is required");
     }
 }
