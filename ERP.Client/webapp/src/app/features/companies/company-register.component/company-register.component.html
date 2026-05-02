@@ -1,0 +1,35 @@
+<div class="container">
+    <form (submit)="onSubmit($event)">
+        <div>
+            <label class="form-label">Name:</label>
+            <input type="text" class="form-control" [formField]="companyForm.name">
+        </div>
+        <div>
+            <label class="form-label"></label>
+            <textarea rows="10" class="form-control" [formField]="companyForm.description"></textarea>
+        </div>
+
+        <div>
+            <label class="form-label">Street:</label>
+            <input type="text" class="form-control" [formField]="companyForm.address.street">
+        </div>
+        <div>
+            <label class="form-label">City:</label>
+            <input type="text" class="form-control" [formField]="companyForm.address.city">
+        </div>
+        <div>
+            <label class="form-label">State:</label>
+            <input type="text" class="form-control" [formField]="companyForm.address.state">
+        </div>
+        <div>
+            <label class="form-label">Country:</label>
+            <input type="text" class="form-control" [formField]="companyForm.address.country">
+        </div>
+        <div>
+            <label class="form-label">Zip Code:</label>
+            <input type="text" class="form-control" [formField]="companyForm.address.zipCode">
+        </div>
+
+        <button class="btn btn-primary mt-5" type="submit" [disabled]="!companyForm().valid()">Register</button>
+    </form>
+</div>

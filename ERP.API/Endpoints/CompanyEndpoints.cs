@@ -9,7 +9,7 @@ public static class CompanyEndpoints
 {
     public static void MapCompanyEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/companies");
+        var group = app.MapGroup("/api/companies");
 
         group.MapGet("/", GetCompanies);
         group.MapGet("/{id}", GetCompany);
@@ -51,7 +51,7 @@ public static class CompanyEndpoints
         unitOfWork.GetRepository<Company, Company.CompanyId>().Add(company);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Results.Created($"/companies/{company.PublicId}", company);
+        return Results.Created($"/companies/{company.PublicId}", company.PublicId.Value);
     }
 
     private static async Task<IResult> RenameCompany(Guid id, RenameCompanyRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
