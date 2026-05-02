@@ -84,7 +84,7 @@ public class CompanyUT
     public void Should_Throw_When_Trying_To_Set_Invalid_Address()
     {
         Company company = Company.Register("My", "a", _address);
-        Action act = () => company.UpdateAddress(null!);
+        Action act = () => company.ChangeAddress(null!);
         act.Should().Throw<ArgumentNullException>(because: "Address is null");
     }
 
@@ -94,7 +94,7 @@ public class CompanyUT
     public void Should_Throw_When_UpdateDescription_Is_Invalid(string description)
     {
         Company company = Company.Register(_validLongName, "a", _address);
-        Action act = () => company.UpdateDescription(description);
+        Action act = () => company.ChangeDescription(description);
         act.Should().Throw<ArgumentException>();
     }
 }

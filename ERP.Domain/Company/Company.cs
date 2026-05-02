@@ -9,6 +9,9 @@ public class Company : IAggregateRoot
     {
         public static CompanyId Empty { get; } = new(Guid.Empty);
         public static CompanyId NewId() => new(Guid.NewGuid());
+
+        public override string ToString() => Value.ToString();
+        public static implicit operator CompanyId(Guid value) => new(value);
     }
 
     public CompanyId PublicId { get; private set; } = CompanyId.NewId();
@@ -41,12 +44,12 @@ public class Company : IAggregateRoot
         Name = name;
     }
 
-    public void UpdateAddress(Address address)
+    public void ChangeAddress(Address address)
     {
         Address = address ?? throw new ArgumentNullException("Address is required");
     }
 
-    public void UpdateDescription(string description)
+    public void ChangeDescription(string description)
     {
         if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Description is required");
         Description = description;
