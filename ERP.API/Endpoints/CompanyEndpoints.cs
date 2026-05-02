@@ -12,24 +12,38 @@ public static class CompanyEndpoints
         var group = app.MapGroup("/companies");
 
         group.MapGet("/", GetCompanies);
+        group.MapGet("/{id}", GetCompany);
         group.MapPost("/", RegisterCompany);
     }
 
-    private static async Task<ICompanyQueries.CompanyResponse[]> GetCompanies(ICompanyQueries queries, CancellationToken cancellationToken = default) => await queries.GetCompaniesAsync(cancellationToken);
+    private record RegisterCompanyRequest(string Name, string Description, AddressRequest Address);
+    private record AddressRequest(string Street, string City, string State, string Country, string ZipCode);
+
+    private static async Task<ICompanyQueries.CompanyResponse[]> GetCompanies(ICompanyQueries queries, CancellationToken cancellationToken = default) =>
+        await queries.GetCompaniesAsync(cancellationToken);
+
+    private static async Task<IResult> GetCompany(Guid id, ICompanyQueries queries, CancellationToken cancellationToken = default) =>
+        await queries.GetCompanyAsync(id, cancellationToken) is ICompanyQueries.CompanyResponse company
+        ? Results.Ok(company)
+        : Results.NotFound();
 
     private static async Task<IResult> RegisterCompany(RegisterCompanyRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
     {
-        var company = Company.Register(request.Name, request.Description, request.Address.CreateAddress());
+        var company = Company.Register(
+            request.Name,
+            request.Description,
+            new Address(
+                request.Address.Street,
+                request.Address.City,
+                request.Address.State,
+                request.Address.Country,
+                request.Address.ZipCode
+            )
+        );
 
         unitOfWork.GetRepository<Company, Company.CompanyId>().Add(company);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.Created($"/companies/{company.PublicId}", company);
-    }
-
-    private record RegisterCompanyRequest(string Name, string Description, AddressRequest Address);
-    private record AddressRequest(string Street, string City, string State, string Country, string ZipCode)
-    {
-        public Address CreateAddress() => new(Street, City, State, Country, ZipCode);
     }
 }
