@@ -26,7 +26,7 @@ public static class CompanyEndpoints
         await queries.GetCompaniesAsync(cancellationToken);
 
     private static async Task<IResult> GetCompany(Guid id, ICompanyQueries queries, CancellationToken cancellationToken = default) =>
-        await queries.GetCompanyAsync(id, cancellationToken) is ICompanyQueries.CompanyResponse company
+        await queries.GetCompanyAsync(new Company.CompanyId(id), cancellationToken) is ICompanyQueries.CompanyResponse company
         ? Results.Ok(company)
         : Results.NotFound();
 
@@ -52,7 +52,7 @@ public static class CompanyEndpoints
 
     private static async Task<IResult> UpdateCompanyInformation(Guid id, UpdateCompanyInformationRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
     {
-        var company = await unitOfWork.GetRepository<Company, Company.CompanyId>().TryFindAsync(id, cancellationToken);
+        var company = await unitOfWork.GetRepository<Company, Company.CompanyId>().TryFindAsync(new Company.CompanyId(id), cancellationToken);
 
         if (company == null) return Results.NotFound();
 
@@ -73,7 +73,7 @@ public static class CompanyEndpoints
 
     private static async Task<IResult> DeleteCompany(Guid id, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
     {
-        await unitOfWork.GetRepository<Company, Company.CompanyId>().Delete(id, cancellationToken);
+        await unitOfWork.GetRepository<Company, Company.CompanyId>().Delete(new Company.CompanyId(id), cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Results.NoContent();
     }
