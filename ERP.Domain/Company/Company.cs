@@ -8,13 +8,12 @@ public class Company : IAggregateRoot
     public readonly record struct CompanyId(Guid Value)
     {
         public static CompanyId Empty { get; } = new(Guid.Empty);
-        public static CompanyId NewId() => new(Guid.NewGuid());
+        public static CompanyId New() => new(Guid.NewGuid());
 
         public override string ToString() => Value.ToString();
-        public static implicit operator CompanyId(Guid value) => new(value);
     }
 
-    public CompanyId PublicId { get; private set; } = CompanyId.NewId();
+    public CompanyId PublicId { get; private set; } = CompanyId.New();
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public Address Address { get; private set; } = null!;

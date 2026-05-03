@@ -8,13 +8,12 @@ public class Product : IAggregateRoot
     public readonly record struct ProductId(Guid Value)
     {
         public static ProductId Empty { get; } = new(Guid.Empty);
-        public static ProductId NewId() => new(Guid.NewGuid());
+        public static ProductId New() => new(Guid.NewGuid());
 
         public override string ToString() => Value.ToString();
-        public static implicit operator ProductId(Guid value) => new(value);
     }
 
-    public ProductId PublicId { get; private set; }
+    public ProductId PublicId { get; private set; } = ProductId.New();
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public Money Price { get; private set; } = null!;

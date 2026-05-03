@@ -1,3 +1,4 @@
+using ERP.Domain;
 using ERP.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +24,7 @@ public class CompanyQueries(ApplicationDbContext dbContext) : ICompanyQueries
         .AsNoTracking()
         .ToArrayAsync(cancellationToken);
 
-    public async Task<ICompanyQueries.CompanyResponse?> GetCompanyAsync(Guid id, CancellationToken cancellationToken = default) =>
+    public async Task<ICompanyQueries.CompanyResponse?> GetCompanyAsync(Company.CompanyId id, CancellationToken cancellationToken = default) =>
         await dbContext.Companies
         .Where(company => company.PublicId == id)
         .Select(company => new ICompanyQueries.CompanyResponse(

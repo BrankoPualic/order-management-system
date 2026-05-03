@@ -1,3 +1,5 @@
+using ERP.Domain;
+
 namespace ERP.Infrastructure.Queries;
 
 public interface ICompanyQueries
@@ -6,5 +8,5 @@ public interface ICompanyQueries
     public record AddressResponse(string Street, string City, string State, string Country, string ZipCode);
 
     Task<CompanyResponse[]> GetCompaniesAsync(CancellationToken cancellationToken = default);
-    Task<CompanyResponse?> GetCompanyAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<CompanyResponse?> GetCompanyAsync(Company.CompanyId id, CancellationToken cancellationToken = default);
 }
