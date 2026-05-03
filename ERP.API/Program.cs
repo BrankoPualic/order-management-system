@@ -15,6 +15,7 @@ builder.Services.AddCors();
 builder.Services.AddDbContextPool<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUnitOfWork, ApplicationDbContext>();
 builder.Services.AddScoped<ICompanyQueries, CompanyQueries>();
+builder.Services.AddScoped<IProductQueries, ProductQueries>();
 
 var app = builder.Build();
 
@@ -33,5 +34,6 @@ app.UseCors(policy => policy
     .AllowCredentials());
 
 app.MapCompanyEndpoints();
+app.MapProductEndpoints();
 
 app.Run();
