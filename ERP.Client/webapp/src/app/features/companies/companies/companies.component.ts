@@ -20,5 +20,6 @@ export class CompaniesComponent {
     this.companies = this.apiService.httpResource<CompanyModel[] | undefined>('/companies');
   }
 
+  // TODO: Maybe store it as override toString()?
   formatAddress = (address: AddressModel) => `${address.street}, ${address.zipCode} ${address.city}, ${address.state} ${address.country}`;
 }
