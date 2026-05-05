@@ -21,5 +21,5 @@ export class ProductsComponent {
   }
 
   // TODO: Maybe store it as override toString()
-  formatPrice = (price: MoneyModel) => `${price.currency} ${price.amount}`;
+  formatPrice = (price: MoneyModel) => `${price.amount} ${price.currency}`;
 }

@@ -1,14 +1,14 @@
+import { deepCopy } from '@angular-devkit/core';
 import { HttpResourceRef } from '@angular/common/http';
-import { Component, effect, inject, model, Signal, signal } from '@angular/core';
+import { Component, effect, inject, Signal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
-import { FormsModule } from '@angular/forms';
-import { CompanyModel } from '../models/company.model';
 import { AddressModel } from '../models/address.model';
 import { CompanyUpdateInformationRequestModel } from '../models/company-update-information-request.model';
-import { deepCopy } from '@angular-devkit/core';
+import { CompanyModel } from '../models/company.model';
 
 @Component({
   selector: 'app-company',
@@ -22,8 +22,6 @@ export class CompanyComponent {
   apiService = inject(ApiService);
   companyId: Signal<string | null | undefined>;
   company: HttpResourceRef<CompanyModel | undefined>;
-  newName = '';
-  newDescription = '';
   companyCopy = signal<CompanyUpdateInformationRequestModel>({} as CompanyUpdateInformationRequestModel);
 
   constructor() {
@@ -39,7 +37,7 @@ export class CompanyComponent {
 
   deleteCompany() {
     this.apiService.delete(`/companies/${this.companyId()}`).subscribe({
-      next: () => this.router.navigate(['/companies/register']),
+      next: () => this.router.navigate(['/companies']),
       error: error => console.error(error)
     })
   }

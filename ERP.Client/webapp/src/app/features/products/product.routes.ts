@@ -7,8 +7,13 @@ export const productRoutes: Routes = [
         loadComponent: () => import('./product-register/product-register.component').then(_ => _.ProductRegisterComponent)
     },
     {
+        path: 'products/:id',
+        title: 'Product',
+        loadComponent: () => import('./product/product.component').then(_ => _.ProductComponent)
+    },
+    {
         path: 'products',
         title: 'Products',
-        loadComponent: () => import('./products.component/products.component').then(_ => _.ProductsComponent)
+        loadComponent: () => import('./products/products.component').then(_ => _.ProductsComponent)
     }
 ]
