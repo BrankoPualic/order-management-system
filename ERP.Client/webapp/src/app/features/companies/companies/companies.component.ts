@@ -7,7 +7,7 @@ import { AddressModel } from '../models/address.model';
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-companies.component',
+  selector: 'app-companies',
   imports: [DatePipe, RouterLink],
   templateUrl: './companies.component.html',
   styleUrl: './companies.component.css',

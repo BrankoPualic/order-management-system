@@ -11,7 +11,7 @@ import { CompanyUpdateInformationRequestModel } from '../models/company-update-i
 import { deepCopy } from '@angular-devkit/core';
 
 @Component({
-  selector: 'app-company.component',
+  selector: 'app-company',
   imports: [FormsModule],
   templateUrl: './company.component.html',
   styleUrl: './company.component.css',

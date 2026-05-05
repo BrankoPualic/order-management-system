@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CompanyRegisterRequestModel } from '../models/company-register-request.model';
 
 @Component({
-  selector: 'app-company-register.component',
+  selector: 'app-company-register',
   imports: [FormField],
   templateUrl: './company-register.component.html',
   styleUrl: './company-register.component.css',

@@ -12,7 +12,7 @@ public sealed record Money
         if (amount <= 0) throw new DomainException(MoneyErrors.AmountEmpty);
 
         if (string.IsNullOrWhiteSpace(currency)) throw new DomainException(MoneyErrors.CurrencyEmpty);
-        if (currency.Length != 3) throw new DomainException(MoneyErrors.CurrencyNotISO);
+        if (!System.Text.RegularExpressions.Regex.IsMatch(currency, @"^[A-Z]{3}$")) throw new DomainException(MoneyErrors.CurrencyNotISO);
 
         Amount = amount;
         Currency = currency;
