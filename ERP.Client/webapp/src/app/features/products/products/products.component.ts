@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ApiService } from '../../../core/services/api.service';
 import { HttpResourceRef } from '@angular/common/http';
 import { ProductModel } from '../models/product.model';
-import { MoneyModel } from '../models/money.model';
+import { MoneyModel } from '../../../shared/models/money.model';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 

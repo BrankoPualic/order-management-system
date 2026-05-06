@@ -1,0 +1,30 @@
+<div class="container my-3">
+    <button class="btn btn-primary float-end mb-3" type="button" routerLink="/warehouses/register">Register
+        Warehouse</button>
+    @if(warehouses.hasValue()) {
+    <table class="table table-light table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Registered on</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(warehouse of warehouses.value(); track $index) {
+            <tr>
+                <td><a href [routerLink]="['/warehouses', warehouse.id]">{{ warehouse.name }}</a></td>
+                <td>{{ warehouse.createdOn | date: 'longDate'}}</td>
+                <td>{{ formatAddress(warehouse.address) }}</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }
+    @else if(warehouses.error()) {
+    <div>Could not load warehouses</div>
+    }
+    @else if (warehouses.isLoading()) {
+    <div>Loading warehouses...</div>
+    }
+</div>

@@ -36,5 +36,6 @@ app.UseCors(policy => policy
 
 app.MapCompanyEndpoints();
 app.MapProductEndpoints();
+app.MapWarehouseEndpoints();
 
 app.Run();

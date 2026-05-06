@@ -1,6 +1,6 @@
 import { AddressModel } from '../../../shared/models/address.model';
 
-export interface CompanyModel {
+export interface WarehouseModel {
     id: string;
     name: string;
     description: string;

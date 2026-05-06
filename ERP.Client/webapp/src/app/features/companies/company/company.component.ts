@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
-import { AddressModel } from '../models/address.model';
+import { AddressModel } from '../../../shared/models/address.model';
 import { CompanyUpdateInformationRequestModel } from '../models/company-update-information-request.model';
 import { CompanyModel } from '../models/company.model';
 

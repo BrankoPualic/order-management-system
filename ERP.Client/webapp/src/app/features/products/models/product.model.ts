@@ -1,4 +1,4 @@
-import { MoneyModel } from './money.model';
+import { MoneyModel } from '../../../shared/models/money.model';
 
 export interface ProductModel {
     id: string;

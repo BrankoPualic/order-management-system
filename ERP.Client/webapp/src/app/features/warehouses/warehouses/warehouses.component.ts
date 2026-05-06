@@ -1,23 +1,23 @@
-import { Component, inject } from '@angular/core';
-import { ApiService } from '../../../core/services/api.service';
-import { HttpResourceRef } from '@angular/common/http';
-import { CompanyModel } from '../models/company.model';
 import { DatePipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ApiService } from '../../../core/services/api.service';
+import { WarehouseModel } from '../models/warehouse.model';
+import { HttpResourceRef } from '@angular/common/http';
 import { AddressModel } from '../../../shared/models/address.model';
-import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-companies',
+  selector: 'app-warehouses',
   imports: [DatePipe, RouterLink],
-  templateUrl: './companies.component.html',
-  styleUrl: './companies.component.css',
+  templateUrl: './warehouses.component.html',
+  styleUrl: './warehouses.component.css',
 })
-export class CompaniesComponent {
+export class WarehousesComponent {
   apiService = inject(ApiService);
-  companies: HttpResourceRef<CompanyModel[] | undefined>;
+  warehouses: HttpResourceRef<WarehouseModel[] | undefined>;
 
   constructor() {
-    this.companies = this.apiService.httpResource<CompanyModel[] | undefined>('/companies');
+    this.warehouses = this.apiService.httpResource<WarehouseModel[] | undefined>('/warehouses');
   }
 
   // TODO: Maybe store it as override toString()?
