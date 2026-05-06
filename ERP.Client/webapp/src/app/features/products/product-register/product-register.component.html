@@ -13,17 +13,7 @@
             </div>
         </div>
 
-        <div class="my-3">
-            <h5>Price</h5>
-            <div>
-                <label class="form-label">Amount:</label>
-                <input type="number" step="0.01" class="form-control" [formField]="productForm.price.amount">
-            </div>
-            <div>
-                <label class="form-label">Currency:</label>
-                <input type="text" class="form-control" [formField]="productForm.price.currency">
-            </div>
-        </div>
+        <app-money-form [money]="productForm.price"></app-money-form>
 
         <button class="btn btn-primary" type="submit" [disabled]="!productForm().valid()">Register</button>
     </form>

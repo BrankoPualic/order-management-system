@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { addressSchema } from '../../../shared/models/address/address.utils';
 import { emptyWarehouse, warehouseMapper, warehouseSchema } from '../warehouse.utils';
+import { AddressFormComponent } from "../../../shared/components/address-form/address-form.component";
 
 @Component({
   selector: 'app-warehouse-register',
-  imports: [FormField],
+  imports: [FormField, AddressFormComponent],
   templateUrl: './warehouse-register.component.html',
   styles: '',
 })

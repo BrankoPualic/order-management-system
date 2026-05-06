@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { companyMapper, companySchema, emptyCompany } from '../company.utils';
 import { addressSchema } from '../../../shared/models/address/address.utils';
+import { AddressFormComponent } from "../../../shared/components/address-form/address-form.component";
 
 @Component({
   selector: 'app-company-register',
-  imports: [FormField],
+  imports: [FormField, AddressFormComponent],
   templateUrl: './company-register.component.html',
   styles: '',
 })

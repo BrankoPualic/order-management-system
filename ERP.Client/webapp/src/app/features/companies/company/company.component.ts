@@ -8,10 +8,11 @@ import { ApiService } from '../../../core/services/api.service';
 import { formatAddress } from '../../../shared/models/address/address.utils';
 import { Company } from '../company.model';
 import { companyMapper, emptyCompany } from '../company.utils';
+import { AddressFormComponent } from "../../../shared/components/address-form/address-form.component";
 
 @Component({
   selector: 'app-company',
-  imports: [FormField],
+  imports: [FormField, AddressFormComponent],
   templateUrl: './company.component.html',
   styles: '',
 })

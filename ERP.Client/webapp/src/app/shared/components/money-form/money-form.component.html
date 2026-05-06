@@ -1,0 +1,11 @@
+<div class="my-3">
+    <h5>Price</h5>
+    <div>
+        <label class="form-label">Amount:</label>
+        <input type="number" step="0.01" class="form-control" [formField]="money().amount">
+    </div>
+    <div>
+        <label class="form-label">Currency:</label>
+        <input type="text" class="form-control" [formField]="money().currency">
+    </div>
+</div>

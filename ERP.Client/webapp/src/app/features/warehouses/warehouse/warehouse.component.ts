@@ -8,10 +8,11 @@ import { ApiService } from '../../../core/services/api.service';
 import { formatAddress } from '../../../shared/models/address/address.utils';
 import { Warehouse } from '../warehouse.model';
 import { emptyWarehouse, warehouseMapper } from '../warehouse.utils';
+import { AddressFormComponent } from "../../../shared/components/address-form/address-form.component";
 
 @Component({
   selector: 'app-warehouse',
-  imports: [FormField],
+  imports: [FormField, AddressFormComponent],
   templateUrl: './warehouse.component.html',
   styles: '',
 })

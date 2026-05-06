@@ -13,29 +13,7 @@
             </div>
         </div>
 
-        <div class="my-3">
-            <h5>Address</h5>
-            <div>
-                <label class="form-label">Street:</label>
-                <input type="text" class="form-control" [formField]="companyForm.address.street">
-            </div>
-            <div>
-                <label class="form-label">City:</label>
-                <input type="text" class="form-control" [formField]="companyForm.address.city">
-            </div>
-            <div>
-                <label class="form-label">State:</label>
-                <input type="text" class="form-control" [formField]="companyForm.address.state">
-            </div>
-            <div>
-                <label class="form-label">Country:</label>
-                <input type="text" class="form-control" [formField]="companyForm.address.country">
-            </div>
-            <div>
-                <label class="form-label">Zip Code:</label>
-                <input type="text" class="form-control" [formField]="companyForm.address.zipCode">
-            </div>
-        </div>
+        <app-address-form [address]="companyForm.address"></app-address-form>
 
         <button class="btn btn-primary" type="submit" [disabled]="!companyForm().valid()">Register</button>
     </form>

@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { moneySchema } from '../../../shared/models/money/money.utils';
 import { emptyProduct, productMapper, productSchema } from '../product.utils';
+import { MoneyFormComponent } from "../../../shared/components/money-form/money-form.component";
 
 @Component({
   selector: 'app-product-register',
-  imports: [FormField],
+  imports: [FormField, MoneyFormComponent],
   templateUrl: './product-register.component.html',
   styles: '',
 })

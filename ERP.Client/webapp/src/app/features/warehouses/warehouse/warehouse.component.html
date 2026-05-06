@@ -30,29 +30,9 @@
                     <textarea rows="10" class="form-control" [formField]="warehouseForm.description"></textarea>
                 </div>
             </div>
-            <div class="my-3">
-                <h5>Address</h5>
-                <div>
-                    <label class="form-label">Street:</label>
-                    <input type="text" class="form-control" [formField]="warehouseForm.address.street">
-                </div>
-                <div>
-                    <label class="form-label">City:</label>
-                    <input type="text" class="form-control" [formField]="warehouseForm.address.city">
-                </div>
-                <div>
-                    <label class="form-label">State:</label>
-                    <input type="text" class="form-control" [formField]="warehouseForm.address.state">
-                </div>
-                <div>
-                    <label class="form-label">Country:</label>
-                    <input type="text" class="form-control" [formField]="warehouseForm.address.country">
-                </div>
-                <div>
-                    <label class="form-label">Zip Code:</label>
-                    <input type="text" class="form-control" [formField]="warehouseForm.address.zipCode">
-                </div>
-            </div>
+
+            <app-address-form [address]="warehouseForm.address"></app-address-form>
+
             <button class="btn btn-primary mt-2" type="submit">Update</button>
         </form>
     </div>

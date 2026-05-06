@@ -8,10 +8,11 @@ import { ApiService } from '../../../core/services/api.service';
 import { formatMoney } from '../../../shared/models/money/money.utils';
 import { Product } from '../product.model';
 import { emptyProduct, productMapper } from '../product.utils';
+import { MoneyFormComponent } from "../../../shared/components/money-form/money-form.component";
 
 @Component({
   selector: 'app-product.component',
-  imports: [FormField],
+  imports: [FormField, MoneyFormComponent],
   templateUrl: './product.component.html',
   styles: '',
 })
