@@ -20,7 +20,7 @@ public static class CompanyEndpoints
     }
 
     private record RegisterCompanyRequest(string Name, string Description, CreateAddressRequest Address);
-    private record UpdateCompanyInformationRequest(string Name, string Description, UpdateAddressRequest Address);
+    private record UpdateCompanyRequest(string Name, string Description, UpdateAddressRequest Address);
 
     private static async Task<ICompanyQueries.CompanyResponse[]> GetCompanies(ICompanyQueries queries, CancellationToken cancellationToken = default) =>
         await queries.GetCompaniesAsync(cancellationToken);
@@ -50,7 +50,7 @@ public static class CompanyEndpoints
         return Results.Created($"/companies/{company.PublicId}", company.PublicId.Value);
     }
 
-    private static async Task<IResult> UpdateCompanyInformation(Guid id, UpdateCompanyInformationRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
+    private static async Task<IResult> UpdateCompanyInformation(Guid id, UpdateCompanyRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
     {
         var company = await unitOfWork.GetRepository<Company, Company.CompanyId>().TryFindAsync(new Company.CompanyId(id), cancellationToken);
 

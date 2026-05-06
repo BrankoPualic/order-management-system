@@ -1,36 +1,32 @@
-import { deepCopy } from '@angular-devkit/core';
 import { HttpResourceRef } from '@angular/common/http';
-import { Component, effect, inject, signal, Signal } from '@angular/core';
+import { Component, inject, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
+import { form, FormField, submit } from '@angular/forms/signals';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
 import { formatAddress } from '../../../shared/models/address/address.utils';
-import { WarehouseUpdateInformationRequestModel } from '../models/warehouse-update-information-request.model';
-import { WarehouseModel } from '../models/warehouse.model';
+import { Warehouse } from '../warehouse.model';
+import { emptyWarehouse, warehouseMapper } from '../warehouse.utils';
 
 @Component({
   selector: 'app-warehouse',
-  imports: [FormsModule],
+  imports: [FormField],
   templateUrl: './warehouse.component.html',
-  styleUrl: './warehouse.component.css',
+  styles: '',
 })
 export class WarehouseComponent {
   route = inject(ActivatedRoute);
   router = inject(Router);
   apiService = inject(ApiService);
   warehouseId: Signal<string | null | undefined>;
-  warehouse: HttpResourceRef<WarehouseModel | undefined>;
-  warehouseCopy = signal<WarehouseUpdateInformationRequestModel>({} as WarehouseUpdateInformationRequestModel);
+  warehouse: HttpResourceRef<Warehouse | undefined>;
+  warehouseModel = signal(emptyWarehouse);
+  warehouseForm = form(this.warehouseModel);
 
   constructor() {
     this.warehouseId = toSignal(this.route.paramMap.pipe(map(params => params.get('id'))));
-    this.warehouse = this.apiService.httpResource<WarehouseModel | undefined>(`/companies/${this.warehouseId()}`);
-
-    effect(() => {
-      if (this.warehouse.value()) this.warehouseCopy.set(deepCopy(this.warehouse.value()) as WarehouseUpdateInformationRequestModel);
-    })
+    this.warehouse = this.apiService.httpResource<Warehouse | undefined>(`/companies/${this.warehouseId()}`);
   }
 
   formatAddress = formatAddress;
@@ -42,10 +38,14 @@ export class WarehouseComponent {
     })
   }
 
-  updateWarehouse() {
-    this.apiService.patch(`/companies/${this.warehouseId()}`, this.warehouseCopy()).subscribe({
-      next: () => this.warehouse.reload(),
-      error: error => console.error(error)
+  onSubmit(event: Event) {
+    event.preventDefault();
+    const request = warehouseMapper.toUpdateRequest(this.warehouseModel());
+    submit(this.warehouseForm, async () => {
+      this.apiService.patch(`/companies/${this.warehouseId()}`, request).subscribe({
+        next: () => this.warehouse.reload(),
+        error: error => console.error(error)
+      });
     })
   }
 }

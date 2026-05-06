@@ -20,7 +20,7 @@ public static class WarehouseEndpoints
     }
 
     private record RegisterWarehouseRequest(string Name, string Description, CreateAddressRequest Address);
-    private record UpdateWarehouseInformationRequest(string Name, string Description, UpdateAddressRequest Address);
+    private record UpdateWarehouseRequest(string Name, string Description, UpdateAddressRequest Address);
 
     private static async Task<IWarehouseQueries.WarehouseResponse[]> GetWarehouses(IWarehouseQueries queries, CancellationToken cancellationToken = default) =>
         await queries.GetWarehousesAsync(cancellationToken);
@@ -50,21 +50,24 @@ public static class WarehouseEndpoints
         return Results.Created($"/warehouses/{warehouse.PublicId}", warehouse.PublicId.Value);
     }
 
-    private static async Task<IResult> UpdateWarehouseInformation(Guid id, UpdateWarehouseInformationRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
+    private static async Task<IResult> UpdateWarehouseInformation(Guid id, UpdateWarehouseRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
     {
         var warehouse = await unitOfWork.GetRepository<Warehouse, Warehouse.WarehouseId>().TryFindAsync(new Warehouse.WarehouseId(id), cancellationToken);
 
         if (warehouse == null) return Results.NotFound();
 
-        warehouse.Rename(request.Name);
-        warehouse.ChangeDescription(request.Description);
-        warehouse.ChangeAddress(warehouse.Address.Update(
-            request.Address.Street,
-            request.Address.City,
-            request.Address.State,
-            request.Address.Country,
-            request.Address.ZipCode
-        ));
+        if (!string.IsNullOrWhiteSpace(request.Name))
+            warehouse.Rename(request.Name);
+        if (!string.IsNullOrWhiteSpace(request.Description))
+            warehouse.ChangeDescription(request.Description);
+        if (request.Address != null)
+            warehouse.ChangeAddress(warehouse.Address.Update(
+                request.Address.Street,
+                request.Address.City,
+                request.Address.State,
+                request.Address.Country,
+                request.Address.ZipCode
+            ));
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

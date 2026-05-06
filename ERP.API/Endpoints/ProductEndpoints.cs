@@ -20,7 +20,7 @@ public static class ProductEndpoints
     }
 
     private record RegisterProductRequest(string Name, string Description, CreateMoneyRequest Price);
-    private record UpdateProductInformationRequest(string Name, string Description, UpdateMoneyRequest Price);
+    private record UpdateProductRequest(string Name, string Description, UpdateMoneyRequest Price);
 
     private static async Task<IProductQueries.ProductResponse[]> GetProducts(IProductQueries queries, CancellationToken cancellationToken = default) =>
         await queries.GetProductsAsync(cancellationToken);
@@ -44,7 +44,7 @@ public static class ProductEndpoints
         return Results.Created($"/products/{product.PublicId}", product.PublicId.Value);
     }
 
-    private static async Task<IResult> UpdateProductInformation(Guid id, UpdateProductInformationRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
+    private static async Task<IResult> UpdateProductInformation(Guid id, UpdateProductRequest request, IUnitOfWork unitOfWork, CancellationToken cancellationToken = default)
     {
         var product = await unitOfWork.GetRepository<Product, Product.ProductId>().TryFindAsync(new Product.ProductId(id), cancellationToken);
 

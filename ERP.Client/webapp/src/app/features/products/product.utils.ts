@@ -4,7 +4,7 @@ import { ProductForm, RegisterProductRequest, UpdateProductRequest } from './pro
 
 const PRODUCT_RULES = {
     nameMax: 255
-};
+} as const;
 
 export const emptyProduct: ProductForm = {
     name: '',
