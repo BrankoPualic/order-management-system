@@ -1,5 +1,6 @@
 using ERP.Domain;
 using ERP.Infrastructure.Persistence;
+using ERP.Infrastructure.Queries.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace ERP.Infrastructure.Queries;
@@ -13,7 +14,7 @@ public class CompanyQueries(ApplicationDbContext dbContext) : ICompanyQueries
             company.Name,
             company.Description,
             company.CreatedOn,
-            new ICompanyQueries.AddressResponse(
+            new AddressResponse(
                 company.Address.Street,
                 company.Address.City,
                 company.Address.State,
@@ -32,7 +33,7 @@ public class CompanyQueries(ApplicationDbContext dbContext) : ICompanyQueries
             company.Name,
             company.Description,
             company.CreatedOn,
-            new ICompanyQueries.AddressResponse(
+            new AddressResponse(
                 company.Address.Street,
                 company.Address.City,
                 company.Address.State,

@@ -16,6 +16,7 @@ builder.Services.AddDbContextPool<ApplicationDbContext>(options => options.UseNp
 builder.Services.AddScoped<IUnitOfWork, ApplicationDbContext>();
 builder.Services.AddScoped<ICompanyQueries, CompanyQueries>();
 builder.Services.AddScoped<IProductQueries, ProductQueries>();
+builder.Services.AddScoped<IWarehouseQueries, WarehouseQueries>();
 
 var app = builder.Build();
 

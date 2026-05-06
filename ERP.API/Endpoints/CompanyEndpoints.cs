@@ -1,3 +1,4 @@
+using ERP.API.Endpoints.Request;
 using ERP.Domain;
 using ERP.Domain.Shared;
 using ERP.Domain.Shared.ValueObjects;
@@ -19,7 +20,6 @@ public static class CompanyEndpoints
     }
 
     private record RegisterCompanyRequest(string Name, string Description, AddressRequest Address);
-    private record AddressRequest(string Street, string City, string State, string Country, string ZipCode);
     private record UpdateCompanyInformationRequest(string Name, string Description, AddressRequest Address);
 
     private static async Task<ICompanyQueries.CompanyResponse[]> GetCompanies(ICompanyQueries queries, CancellationToken cancellationToken = default) =>

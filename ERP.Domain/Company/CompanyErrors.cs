@@ -9,5 +9,5 @@ public static class CompanyErrors
 
     public static readonly DomainError DescriptionEmpty = new("company.description.empty", "Company description cannot be empty");
 
-    public static readonly DomainError AddressEmpty = new("company.address.empty", "Address cannot be empty");
+    public static readonly DomainError AddressEmpty = new("company.address.empty", "Company address cannot be empty");
 }
