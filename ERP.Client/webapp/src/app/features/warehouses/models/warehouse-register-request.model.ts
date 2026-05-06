@@ -1,7 +1,7 @@
-import { AddressRequestModel } from '../../../shared/models/address/address-request.model';
+import { UpdateAddressRequest } from '../../../shared/models/address/address.model';
 
 export interface WarehouseRegisterRequestModel {
     name: string;
     description: string;
-    address: AddressRequestModel;
+    address: UpdateAddressRequest;
 }

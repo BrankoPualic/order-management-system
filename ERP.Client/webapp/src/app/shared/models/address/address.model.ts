@@ -6,5 +6,6 @@ export interface Address {
     zipCode: string;
 }
 
-export type CreateAddressRequest = Address;
-export type UpdateAddressRequest = Partial<Address>;
+export type AddressForm = Address;
+export type CreateAddressRequest = AddressForm;
+export type UpdateAddressRequest = Partial<AddressForm>;

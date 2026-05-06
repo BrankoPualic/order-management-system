@@ -3,7 +3,7 @@ import { ApiService } from '../../../core/services/api.service';
 import { Router } from '@angular/router';
 import { WarehouseRegisterRequestModel } from '../models/warehouse-register-request.model';
 import { form, FormField, maxLength, required, submit } from '@angular/forms/signals';
-import { applyAddressValidators } from '../../../shared/models/address/address.utils';
+import { addressSchema } from '../../../shared/models/address/address.utils';
 
 @Component({
   selector: 'app-warehouse-register',
@@ -34,7 +34,7 @@ export class WarehouseRegisterComponent {
 
     required(path.description);
 
-    applyAddressValidators(path.address);
+    addressSchema(path.address);
   });
 
   onSubmit(event: Event) {

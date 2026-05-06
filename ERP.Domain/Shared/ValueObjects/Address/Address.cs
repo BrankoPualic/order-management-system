@@ -39,5 +39,6 @@ public sealed record Address
         return new(street, city, state, country, zipCode);
     }
 
+    // TODO: Bad design. If value is empty string or string contained of only white spaces it will proceed and throw in create. This is okay for now but consider fixing this in the future. Might as well build notification design pattern.
     public Address Update(string? street, string? city, string? state, string? country, string? zipCode) => Create(street ?? Street, city ?? City, state ?? State, country ?? Country, zipCode ?? ZipCode);
 }

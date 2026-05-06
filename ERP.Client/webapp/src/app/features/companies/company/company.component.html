@@ -1,42 +1,62 @@
 <div class="container my-3">
     @if (company.hasValue()) {
-    <h5>Information</h5>
-    <div>
-        <strong>Name:</strong>
-        <div>{{ company.value().name }}</div>
-    </div>
-    <div class="mt-3">
-        <strong>Description:</strong>
-        <div>{{ company.value().description }}</div>
-    </div>
-    <div class="mt-3">
-        <strong>Address:</strong>
-        <div>{{ formatAddress(company.value().address) }}</div>
+    <h3 class="border-bottom pb-2">Company</h3>
+    <div class="my-3">
+        <h5>Information</h5>
+        <div>
+            <strong>Name:</strong>
+            <div>{{ company.value().name }}</div>
+        </div>
+        <div class="mt-3">
+            <strong>Description:</strong>
+            <div>{{ company.value().description }}</div>
+        </div>
+        <div class="mt-3">
+            <strong>Address:</strong>
+            <div>{{ formatAddress(company.value().address) }}</div>
+        </div>
     </div>
 
     <div class="my-3">
-        <h5>Update Information</h5>
-        <div>
-            <label class="form-label">Name:</label>
-            <input type="text" class="form-control" [(ngModel)]="companyCopy().name" />
-        </div>
-        <div>
-            <label class="form-label">Description:</label>
-            <textarea rows="2" class="form-control" [(ngModel)]="companyCopy().description"></textarea>
-        </div>
-        <div>
-            <label class="form-label">Address:</label>
-            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.street"
-                placeholder="Street" />
-            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.city" placeholder="City" />
-            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.state"
-                placeholder="State" />
-            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.country"
-                placeholder="Country" />
-            <input type="text" class="form-control my-1" [(ngModel)]="companyCopy().address.zipCode"
-                placeholder="Zip Code" />
-        </div>
-        <button class="btn btn-primary mt-2" type="button" (click)="updateCompany()">Update</button>
+        <h3 class="border-bottom pb-2">Update Company</h3>
+        <form (submit)="onSubmit($event)">
+            <div class="my-3">
+                <h5>General Information</h5>
+                <div>
+                    <label class="form-label">Name:</label>
+                    <input type="text" class="form-control" [formField]="companyForm.name">
+                </div>
+                <div>
+                    <label class="form-label">Description:</label>
+                    <textarea rows="10" class="form-control" [formField]="companyForm.description"></textarea>
+                </div>
+            </div>
+
+            <div class="my-3">
+                <h5>Address</h5>
+                <div>
+                    <label class="form-label">Street:</label>
+                    <input type="text" class="form-control" [formField]="companyForm.address.street">
+                </div>
+                <div>
+                    <label class="form-label">City:</label>
+                    <input type="text" class="form-control" [formField]="companyForm.address.city">
+                </div>
+                <div>
+                    <label class="form-label">State:</label>
+                    <input type="text" class="form-control" [formField]="companyForm.address.state">
+                </div>
+                <div>
+                    <label class="form-label">Country:</label>
+                    <input type="text" class="form-control" [formField]="companyForm.address.country">
+                </div>
+                <div>
+                    <label class="form-label">Zip Code:</label>
+                    <input type="text" class="form-control" [formField]="companyForm.address.zipCode">
+                </div>
+            </div>
+            <button class="btn btn-primary mt-2" type="submit">Update</button>
+        </form>
     </div>
 
     <button class="btn btn-danger mt-3" type="button" (click)="deleteCompany()">Delete</button>

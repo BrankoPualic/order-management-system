@@ -56,15 +56,18 @@ public static class CompanyEndpoints
 
         if (company == null) return Results.NotFound();
 
-        company.Rename(request.Name);
-        company.ChangeDescription(request.Description);
-        company.ChangeAddress(company.Address.Update(
-            request.Address.Street,
-            request.Address.City,
-            request.Address.State,
-            request.Address.Country,
-            request.Address.ZipCode
-        ));
+        if (!string.IsNullOrWhiteSpace(request.Name))
+            company.Rename(request.Name);
+        if (!string.IsNullOrWhiteSpace(request.Description))
+            company.ChangeDescription(request.Description);
+        if (request.Address != null)
+            company.ChangeAddress(company.Address.Update(
+                request.Address.Street,
+                request.Address.City,
+                request.Address.State,
+                request.Address.Country,
+                request.Address.ZipCode
+            ));
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
