@@ -9,7 +9,7 @@ public class AddressUT
     [Test]
     public void Should_CreateAddress_When_AddressIsValid()
     {
-        Address address = new("street", "city", "state", "country", "zip");
+        Address address = Address.Create("street", "city", "state", "country", "zip");
         address.Street.Should().Be("street");
         address.City.Should().Be("city");
         address.State.Should().Be("state");
@@ -46,7 +46,7 @@ public class AddressUT
     [TestCaseSource(nameof(InvalidAddressCases))]
     public void Should_Throw_When_AddressIsInvalid(string? street, string? city, string? state, string? country, string? zip)
     {
-        Action act = () => _ = new Address(street!, city!, state!, country!, zip!);
+        Action act = () => _ = Address.Create(street!, city!, state!, country!, zip!);
         act.Should().Throw();
     }
 }

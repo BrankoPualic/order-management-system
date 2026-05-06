@@ -12,7 +12,7 @@ public class CompanyUT
     [SetUp]
     public void SetUp()
     {
-        _address = new("street", "city", "state", "country", "zip");
+        _address = Address.Create("street", "city", "state", "country", "zip");
     }
 
     [Test]
@@ -92,7 +92,7 @@ public class CompanyUT
     public void Should_ChangeAddress_When_AddressIsValid()
     {
         Company company = Company.Register("name", "description", _address);
-        company.ChangeAddress(new Address("new street", "new city", "new state", "new country", "new zip"));
+        company.ChangeAddress(Address.Create("new street", "new city", "new state", "new country", "new zip"));
         company.Address.Street.Should().Be("new street");
         company.Address.City.Should().Be("new city");
         company.Address.State.Should().Be("new state");

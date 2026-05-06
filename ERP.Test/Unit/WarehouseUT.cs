@@ -12,7 +12,7 @@ public class WarehouseUT
     [SetUp]
     public void SetUp()
     {
-        _address = new("street", "city", "state", "country", "zip");
+        _address = Address.Create("street", "city", "state", "country", "zip");
     }
 
     [Test]
@@ -92,7 +92,7 @@ public class WarehouseUT
     public void Should_ChangeAddress_When_AddressIsValid()
     {
         Warehouse warehouse = Warehouse.Register("name", "description", _address);
-        warehouse.ChangeAddress(new Address("new street", "new city", "new state", "new country", "new zip"));
+        warehouse.ChangeAddress(Address.Create("new street", "new city", "new state", "new country", "new zip"));
         warehouse.Address.Street.Should().Be("new street");
         warehouse.Address.City.Should().Be("new city");
         warehouse.Address.State.Should().Be("new state");

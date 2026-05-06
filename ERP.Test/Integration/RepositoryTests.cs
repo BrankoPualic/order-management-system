@@ -1,4 +1,5 @@
 using ERP.Domain;
+using ERP.Domain.Shared.ValueObjects;
 using ERP.Test.Integration.Base;
 using FluentAssertions;
 
@@ -12,7 +13,7 @@ public class RepositoryTests : IntegrationTestBase
 
     public RepositoryTests() : base()
     {
-        _company = Company.Register("name", "description", new("street", "city", "state", "country", "zip"));
+        _company = Company.Register("name", "description", Address.Create("street", "city", "state", "country", "zip"));
     }
 
     [Test]
