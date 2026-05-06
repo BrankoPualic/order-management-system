@@ -1,9 +1,9 @@
-import { MoneyModel } from '../../../shared/models/money.model';
+import { Money } from '../../../shared/models/money/money.model';
 
 export interface ProductModel {
     id: string;
     name: string;
     description: string;
     createdOn: Date | string;
-    price: MoneyModel;
+    price: Money;
 }

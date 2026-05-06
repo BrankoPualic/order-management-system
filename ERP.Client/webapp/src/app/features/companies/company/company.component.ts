@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
-import { AddressModel } from '../../../shared/models/address.model';
+import { formatAddress } from '../../../shared/models/address/address.utils';
 import { CompanyUpdateInformationRequestModel } from '../models/company-update-information-request.model';
 import { CompanyModel } from '../models/company.model';
 
@@ -33,7 +33,7 @@ export class CompanyComponent {
     })
   }
 
-  formatAddress = (address: AddressModel) => `${address.street}<br/>${address.zipCode} ${address.city}, ${address.state}<br/>${address.country}`;
+  formatAddress = formatAddress;
 
   deleteCompany() {
     this.apiService.delete(`/companies/${this.companyId()}`).subscribe({

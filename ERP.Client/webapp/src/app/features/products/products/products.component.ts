@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { ApiService } from '../../../core/services/api.service';
-import { HttpResourceRef } from '@angular/common/http';
-import { ProductModel } from '../models/product.model';
-import { MoneyModel } from '../../../shared/models/money.model';
 import { DatePipe } from '@angular/common';
+import { HttpResourceRef } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ApiService } from '../../../core/services/api.service';
+import { formatMoney } from '../../../shared/models/money/money.utils';
+import { ProductModel } from '../models/product.model';
 
 @Component({
   selector: 'app-products',
@@ -20,6 +20,5 @@ export class ProductsComponent {
     this.products = this.apiService.httpResource<ProductModel[] | undefined>('/products');
   }
 
-  // TODO: Maybe store it as override toString()
-  formatPrice = (price: MoneyModel) => `${price.amount} ${price.currency}`;
+  formatPrice = formatMoney;
 }

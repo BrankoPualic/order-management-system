@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
-import { MoneyModel } from '../../../shared/models/money.model';
+import { formatMoney } from '../../../shared/models/money/money.utils';
 import { ProductUpdateInformationRequestModel } from '../models/product-update-information-request.model';
 import { ProductModel } from '../models/product.model';
 
@@ -33,7 +33,7 @@ export class ProductComponent {
     })
   }
 
-  formatPrice = (price: MoneyModel) => `${price.amount} ${price.currency}`;
+  formatPrice = formatMoney;
 
   deleteProduct() {
     this.apiService.delete(`/products/${this.productId()}`).subscribe({

@@ -1,14 +1,14 @@
+import { deepCopy } from '@angular-devkit/core';
+import { HttpResourceRef } from '@angular/common/http';
 import { Component, effect, inject, signal, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../../core/services/api.service';
-import { HttpResourceRef } from '@angular/common/http';
-import { WarehouseModel } from '../models/warehouse.model';
-import { WarehouseUpdateInformationRequestModel } from '../models/warehouse-update-information-request.model';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { deepCopy } from '@angular-devkit/core';
-import { AddressModel } from '../../../shared/models/address.model';
+import { ApiService } from '../../../core/services/api.service';
+import { formatAddress } from '../../../shared/models/address/address.utils';
+import { WarehouseUpdateInformationRequestModel } from '../models/warehouse-update-information-request.model';
+import { WarehouseModel } from '../models/warehouse.model';
 
 @Component({
   selector: 'app-warehouse',
@@ -33,7 +33,7 @@ export class WarehouseComponent {
     })
   }
 
-  formatAddress = (address: AddressModel) => `${address.street}<br/>${address.zipCode} ${address.city}, ${address.state}<br/>${address.country}`;
+  formatAddress = formatAddress;
 
   deleteWarehouse() {
     this.apiService.delete(`/warehouses/${this.warehouseId()}`).subscribe({

@@ -3,6 +3,7 @@ import { form, maxLength, required, submit, FormField } from '@angular/forms/sig
 import { ApiService } from '../../../core/services/api.service';
 import { Router } from '@angular/router';
 import { CompanyRegisterRequestModel } from '../models/company-register-request.model';
+import { applyAddressValidators } from '../../../shared/models/address/address.utils';
 
 @Component({
   selector: 'app-company-register',
@@ -33,20 +34,7 @@ export class CompanyRegisterComponent {
 
     required(path.description);
 
-    required(path.address.street);
-    maxLength(path.address.street, 255);
-
-    required(path.address.city);
-    maxLength(path.address.city, 100);
-
-    required(path.address.state);
-    maxLength(path.address.state, 100);
-
-    required(path.address.country);
-    maxLength(path.address.country, 100);
-
-    required(path.address.zipCode);
-    maxLength(path.address.city, 20);
+    applyAddressValidators(path.address);
   });
 
   onSubmit(event: Event) {

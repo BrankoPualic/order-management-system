@@ -3,6 +3,7 @@ import { form, FormField, maxLength, minLength, required, submit } from '@angula
 import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { ProductRegisterRequestModel } from '../models/product-register-request.model';
+import { applyMoneyValidators } from '../../../shared/models/money/money.utils';
 
 @Component({
   selector: 'app-product-register',
@@ -29,11 +30,7 @@ export class ProductRegisterComponent {
 
     required(path.description);
 
-    required(path.price.amount);
-
-    required(path.price.currency);
-    minLength(path.price.currency, 3);
-    maxLength(path.price.currency, 3);
+    applyMoneyValidators(path.price);
   });
 
   onSubmit(event: Event) {

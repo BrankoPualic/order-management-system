@@ -19,8 +19,8 @@ public static class WarehouseEndpoints
         group.MapDelete("/{id}", DeleteWarehouse);
     }
 
-    private record RegisterWarehouseRequest(string Name, string Description, AddressRequest Address);
-    private record UpdateWarehouseInformationRequest(string Name, string Description, AddressRequest Address);
+    private record RegisterWarehouseRequest(string Name, string Description, CreateAddressRequest Address);
+    private record UpdateWarehouseInformationRequest(string Name, string Description, UpdateAddressRequest Address);
 
     private static async Task<IWarehouseQueries.WarehouseResponse[]> GetWarehouses(IWarehouseQueries queries, CancellationToken cancellationToken = default) =>
         await queries.GetWarehousesAsync(cancellationToken);
@@ -35,7 +35,7 @@ public static class WarehouseEndpoints
         var warehouse = Warehouse.Register(
             request.Name,
             request.Description,
-            new Address(
+            Address.Create(
                 request.Address.Street,
                 request.Address.City,
                 request.Address.State,
@@ -58,7 +58,7 @@ public static class WarehouseEndpoints
 
         warehouse.Rename(request.Name);
         warehouse.ChangeDescription(request.Description);
-        warehouse.ChangeAddress(new(
+        warehouse.ChangeAddress(warehouse.Address.Update(
             request.Address.Street,
             request.Address.City,
             request.Address.State,

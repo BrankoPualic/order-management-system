@@ -19,8 +19,8 @@ public static class CompanyEndpoints
         group.MapDelete("/{id}", DeleteCompany);
     }
 
-    private record RegisterCompanyRequest(string Name, string Description, AddressRequest Address);
-    private record UpdateCompanyInformationRequest(string Name, string Description, AddressRequest Address);
+    private record RegisterCompanyRequest(string Name, string Description, CreateAddressRequest Address);
+    private record UpdateCompanyInformationRequest(string Name, string Description, UpdateAddressRequest Address);
 
     private static async Task<ICompanyQueries.CompanyResponse[]> GetCompanies(ICompanyQueries queries, CancellationToken cancellationToken = default) =>
         await queries.GetCompaniesAsync(cancellationToken);
@@ -35,7 +35,7 @@ public static class CompanyEndpoints
         var company = Company.Register(
             request.Name,
             request.Description,
-            new Address(
+            Address.Create(
                 request.Address.Street,
                 request.Address.City,
                 request.Address.State,
@@ -58,7 +58,7 @@ public static class CompanyEndpoints
 
         company.Rename(request.Name);
         company.ChangeDescription(request.Description);
-        company.ChangeAddress(new(
+        company.ChangeAddress(company.Address.Update(
             request.Address.Street,
             request.Address.City,
             request.Address.State,

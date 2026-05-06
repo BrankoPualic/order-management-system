@@ -10,7 +10,16 @@ public sealed record Address
     public string Country { get; init; }
     public string ZipCode { get; init; }
 
-    public Address(string street, string city, string state, string country, string zipCode)
+    private Address(string street, string city, string state, string country, string zipCode)
+    {
+        Street = street;
+        City = city;
+        State = state;
+        Country = country;
+        ZipCode = zipCode;
+    }
+
+    public static Address Create(string street, string city, string state, string country, string zipCode)
     {
         if (string.IsNullOrWhiteSpace(street)) throw new DomainException(AddressErrors.StreetEmpty);
         if (street.Length > 255) throw new DomainException(AddressErrors.StreetTooLong);
@@ -27,10 +36,8 @@ public sealed record Address
         if (string.IsNullOrWhiteSpace(zipCode)) throw new DomainException(AddressErrors.ZipCodeEmpty);
         if (zipCode.Length > 20) throw new DomainException(AddressErrors.ZipCodeTooLong);
 
-        Street = street;
-        City = city;
-        State = state;
-        Country = country;
-        ZipCode = zipCode;
+        return new(street, city, state, country, zipCode);
     }
+
+    public Address Update(string? street, string? city, string? state, string? country, string? zipCode) => Create(street ?? Street, city ?? City, state ?? State, country ?? Country, zipCode ?? ZipCode);
 }

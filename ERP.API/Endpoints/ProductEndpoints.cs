@@ -1,3 +1,4 @@
+using ERP.API.Endpoints.Request;
 using ERP.Domain;
 using ERP.Domain.Shared;
 using ERP.Domain.Shared.ValueObjects;
@@ -18,9 +19,8 @@ public static class ProductEndpoints
         group.MapDelete("/{id}", DeleteProduct);
     }
 
-    private record RegisterProductRequest(string Name, string Description, MoneyRequest Price);
-    private record MoneyRequest(decimal Amount, string Currency);
-    private record UpdateProductInformationRequest(string Name, string Description, MoneyRequest Price);
+    private record RegisterProductRequest(string Name, string Description, CreateMoneyRequest Price);
+    private record UpdateProductInformationRequest(string Name, string Description, UpdateMoneyRequest Price);
 
     private static async Task<IProductQueries.ProductResponse[]> GetProducts(IProductQueries queries, CancellationToken cancellationToken = default) =>
         await queries.GetProductsAsync(cancellationToken);
@@ -35,10 +35,7 @@ public static class ProductEndpoints
         var product = Product.Register(
             request.Name,
             request.Description,
-            new Money(
-                request.Price.Amount,
-                request.Price.Currency
-            )
+            Money.Create(request.Price.Amount, request.Price.Currency)
         );
 
         unitOfWork.GetRepository<Product, Product.ProductId>().Add(product);
@@ -55,7 +52,7 @@ public static class ProductEndpoints
 
         product.Rename(request.Name);
         product.ChangeDescription(request.Description);
-        product.ChangePrice(new(
+        product.ChangePrice(product.Price.Update(
             request.Price.Amount,
             request.Price.Currency
         ));

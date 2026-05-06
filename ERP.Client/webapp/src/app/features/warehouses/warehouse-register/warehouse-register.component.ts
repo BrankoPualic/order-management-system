@@ -3,6 +3,7 @@ import { ApiService } from '../../../core/services/api.service';
 import { Router } from '@angular/router';
 import { WarehouseRegisterRequestModel } from '../models/warehouse-register-request.model';
 import { form, FormField, maxLength, required, submit } from '@angular/forms/signals';
+import { applyAddressValidators } from '../../../shared/models/address/address.utils';
 
 @Component({
   selector: 'app-warehouse-register',
@@ -33,20 +34,7 @@ export class WarehouseRegisterComponent {
 
     required(path.description);
 
-    required(path.address.street);
-    maxLength(path.address.street, 255);
-
-    required(path.address.city);
-    maxLength(path.address.city, 100);
-
-    required(path.address.state);
-    maxLength(path.address.state, 100);
-
-    required(path.address.country);
-    maxLength(path.address.country, 100);
-
-    required(path.address.zipCode);
-    maxLength(path.address.city, 20);
+    applyAddressValidators(path.address);
   });
 
   onSubmit(event: Event) {
