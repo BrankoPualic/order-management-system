@@ -3,5 +3,6 @@ export interface Money {
     currency: string;
 }
 
-export type CreateMoneyRequest = Money;
-export type UpdateMoneyRequest = Partial<Money>;
+export type MoneyForm = Money;
+export type CreateMoneyRequest = MoneyForm;
+export type UpdateMoneyRequest = Partial<MoneyForm>;

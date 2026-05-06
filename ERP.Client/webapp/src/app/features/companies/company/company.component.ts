@@ -22,7 +22,6 @@ export class CompanyComponent {
   companyId: Signal<string | null | undefined>;
   company: HttpResourceRef<Company | undefined>;
   companyModel = signal(emptyCompany);
-
   companyForm = form(this.companyModel);
 
   constructor() {

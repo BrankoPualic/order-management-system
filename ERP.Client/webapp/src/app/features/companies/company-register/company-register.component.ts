@@ -14,9 +14,7 @@ import { addressSchema } from '../../../shared/models/address/address.utils';
 export class CompanyRegisterComponent {
   apiService = inject(ApiService);
   router = inject(Router);
-
   companyModel = signal(emptyCompany);
-
   companyForm = form(this.companyModel, (path) => {
     companySchema(path);
     addressSchema(path.address);

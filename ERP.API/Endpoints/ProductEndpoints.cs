@@ -50,12 +50,15 @@ public static class ProductEndpoints
 
         if (product == null) return Results.NotFound();
 
-        product.Rename(request.Name);
-        product.ChangeDescription(request.Description);
-        product.ChangePrice(product.Price.Update(
-            request.Price.Amount,
-            request.Price.Currency
-        ));
+        if (!string.IsNullOrWhiteSpace(request.Name))
+            product.Rename(request.Name);
+        if (!string.IsNullOrWhiteSpace(request.Description))
+            product.ChangeDescription(request.Description);
+        if (request.Price != null)
+            product.ChangePrice(product.Price.Update(
+                request.Price.Amount,
+                request.Price.Currency
+            ));
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

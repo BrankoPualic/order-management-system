@@ -1,19 +1,36 @@
 import { maxLength, minLength, required } from '@angular/forms/signals';
-import { Money } from './money.model';
+import { CreateMoneyRequest, Money, MoneyForm, UpdateMoneyRequest } from './money.model';
 
-export const MONEY_RULES = {
+const MONEY_RULES = {
     currencyMin: 3,
     currencyMax: 3
 } as const;
 
-export function applyMoneyValidators(path: any) {
-    required(path.amount);
+export const emptyMoney: MoneyForm = {
+    amount: NaN,
+    currency: ''
+};
 
+export const moneySchema = (path: any) => {
+    required(path.amount);
     required(path.currency);
     minLength(path.currency, MONEY_RULES.currencyMin);
     maxLength(path.currency, MONEY_RULES.currencyMax);
-}
+};
 
-export function formatMoney(money: Money) {
-    return `${money.amount} ${money.currency}`;
-}
+export const formatMoney = (money: Money) => `${money.amount} ${money.currency}`;
+
+export const moneyMapper = {
+    toCreateRequest(model: MoneyForm): CreateMoneyRequest {
+        return {
+            amount: model.amount,
+            currency: model.currency.trim()
+        }
+    },
+    toUpdateRequest(model: MoneyForm): UpdateMoneyRequest {
+        return {
+            amount: model.amount || undefined,
+            currency: model.currency.trim() || undefined
+        }
+    }
+};

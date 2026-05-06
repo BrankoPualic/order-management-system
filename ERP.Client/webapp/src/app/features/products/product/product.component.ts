@@ -1,36 +1,32 @@
-import { deepCopy } from '@angular-devkit/core';
 import { HttpResourceRef } from '@angular/common/http';
-import { Component, effect, inject, signal, Signal } from '@angular/core';
+import { Component, inject, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
+import { form, FormField, submit } from '@angular/forms/signals';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
 import { formatMoney } from '../../../shared/models/money/money.utils';
-import { ProductUpdateInformationRequestModel } from '../models/product-update-information-request.model';
-import { ProductModel } from '../models/product.model';
+import { Product } from '../product.model';
+import { emptyProduct, productMapper } from '../product.utils';
 
 @Component({
   selector: 'app-product.component',
-  imports: [FormsModule],
+  imports: [FormField],
   templateUrl: './product.component.html',
-  styleUrl: './product.component.css',
+  styles: '',
 })
 export class ProductComponent {
   route = inject(ActivatedRoute);
   router = inject(Router);
   apiService = inject(ApiService);
   productId: Signal<string | null | undefined>;
-  product: HttpResourceRef<ProductModel | undefined>;
-  productCopy = signal<ProductUpdateInformationRequestModel>({} as ProductUpdateInformationRequestModel);
+  product: HttpResourceRef<Product | undefined>;
+  productModel = signal(emptyProduct);
+  productForm = form(this.productModel);
 
   constructor() {
     this.productId = toSignal(this.route.paramMap.pipe(map(params => params.get('id'))));
-    this.product = this.apiService.httpResource<ProductModel | undefined>(`/products/${this.productId()}`);
-
-    effect(() => {
-      if (this.product.value()) this.productCopy.set(deepCopy(this.product.value()) as ProductUpdateInformationRequestModel);
-    })
+    this.product = this.apiService.httpResource<Product | undefined>(`/products/${this.productId()}`);
   }
 
   formatPrice = formatMoney;
@@ -42,10 +38,14 @@ export class ProductComponent {
     })
   }
 
-  updateProduct() {
-    this.apiService.patch(`/products/${this.productId()}`, this.productCopy()).subscribe({
-      next: () => this.product.reload(),
-      error: error => console.error(error)
+  onSubmit(event: Event) {
+    event.preventDefault();
+    const request = productMapper.toUpdateRequest(this.productModel());
+    submit(this.productForm, async () => {
+      this.apiService.patch(`/products/${this.productId()}`, request).subscribe({
+        next: () => this.product.reload(),
+        error: error => console.error(error)
+      });
     })
   }
 }
