@@ -5,7 +5,7 @@ namespace ERP.Domain.Shared.ValueObjects;
 public sealed record Money
 {
     public decimal Amount { get; init; }
-    public Currency Currency { get; init; }
+    public Currency Currency { get; init; } = null!;
 
     private Money() { }
     private Money(decimal amount, Currency currency)
