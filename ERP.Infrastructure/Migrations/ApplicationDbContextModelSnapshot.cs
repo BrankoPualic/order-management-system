@@ -113,10 +113,15 @@ namespace ERP.Infrastructure.Migrations
                             b1.Property<decimal>("Amount")
                                 .HasColumnType("numeric");
 
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasMaxLength(3)
-                                .HasColumnType("character varying(3)");
+                            b1.ComplexProperty(typeof(Dictionary<string, object>), "Currency", "ERP.Domain.Product.Price#Money.Currency#Currency", b2 =>
+                                {
+                                    b2.IsRequired();
+
+                                    b2.Property<string>("Code")
+                                        .IsRequired()
+                                        .HasMaxLength(3)
+                                        .HasColumnType("character varying(3)");
+                                });
                         });
 
                     b.HasKey("Id");
