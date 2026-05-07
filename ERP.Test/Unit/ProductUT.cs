@@ -12,7 +12,7 @@ public class ProductUT
     [SetUp]
     public void SetUp()
     {
-        _price = Money.Create(1m, "USD");
+        _price = Money.Create(1m, Currency.Create("USD"));
     }
 
     [Test]
@@ -92,8 +92,9 @@ public class ProductUT
     public void Should_ChangePrice_When_PriceIsValid()
     {
         Product product = Product.Register("name", "description", _price);
-        product.ChangePrice(Money.Create(_price.Amount + 1, "RSD"));
+        Currency currency = Currency.Create("RSD");
+        product.ChangePrice(Money.Create(_price.Amount + 1, currency));
         product.Price.Amount.Should().Be(_price.Amount + 1);
-        product.Price.Currency.Should().Be("RSD");
+        product.Price.Currency.Should().Be(currency);
     }
 }
