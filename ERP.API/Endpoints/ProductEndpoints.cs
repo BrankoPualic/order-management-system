@@ -35,7 +35,10 @@ public static class ProductEndpoints
         var product = Product.Register(
             request.Name,
             request.Description,
-            Money.Create(request.Price.Amount, request.Price.Currency)
+            Money.Create(
+                request.Price.Amount,
+                Currency.Create(request.Price.Currency.Code)
+            )
         );
 
         unitOfWork.GetRepository<Product, Product.ProductId>().Add(product);
@@ -57,7 +60,9 @@ public static class ProductEndpoints
         if (request.Price != null)
             product.ChangePrice(product.Price.Update(
                 request.Price.Amount,
-                request.Price.Currency
+                request.Price.Currency != null
+                ? product.Price.Currency.Update(request.Price.Currency.Code)
+                : product.Price.Currency
             ));
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

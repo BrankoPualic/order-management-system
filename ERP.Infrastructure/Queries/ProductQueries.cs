@@ -15,7 +15,7 @@ public class ProductQueries(ApplicationDbContext dbContext) : IProductQueries
             product.CreatedOn,
             new IProductQueries.MoneyResponse(
                 product.Price.Amount,
-                product.Price.Currency
+                new IProductQueries.CurrencyResponse(product.Price.Currency.Code)
             )
         ))
         .AsNoTracking()
@@ -31,7 +31,7 @@ public class ProductQueries(ApplicationDbContext dbContext) : IProductQueries
             product.CreatedOn,
             new IProductQueries.MoneyResponse(
                 product.Price.Amount,
-                product.Price.Currency
+                new IProductQueries.CurrencyResponse(product.Price.Currency.Code)
             ))
         )
         .AsNoTracking()
